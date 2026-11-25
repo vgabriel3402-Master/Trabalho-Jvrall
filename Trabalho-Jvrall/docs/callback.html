@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Autorização · Jvrall Autopost</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topo">
+    <div class="topo-interno">
+      <a class="marca" href="index.html">Jvrall Autopost</a>
+      <nav aria-label="Principal">
+        <a href="index.html">Início</a>
+        <a href="termos.html">Termos de Uso</a>
+        <a href="privacidade.html">Privacidade</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <h1 id="titulo">Autorização do TikTok</h1>
+    <p class="meta">Esta página recebe o retorno do login do TikTok.</p>
+
+    <!--
+      Redirect URI do app: https://<usuario>.github.io/Trabalho-Jvrall/callback.html
+      O TikTok redireciona para cá com ?code=...&state=... (ou ?error=...).
+      O script abaixo só LÊ a URL no navegador e mostra o código na tela.
+      Nada é enviado a servidor algum e nada é gravado.
+      O código sozinho não dá acesso: ele só vira token com a Client Secret,
+      que fica apenas no config.yaml local do responsável.
+    -->
+    <div id="resultado" role="status" aria-live="polite">
+      <p>Verificando o retorno da autorização…</p>
+    </div>
+
+    <noscript>
+      <p>Ative o JavaScript para ver o código de autorização, ou copie o valor do parâmetro <code>code</code> do endereço desta página.</p>
+    </noscript>
+  </main>
+
+  <footer>
+    Jvrall Autopost não é afiliado, patrocinado ou endossado pelo TikTok.
+  </footer>
+
+  <script>
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      var code = params.get("code");
+      var erro = params.get("error");
+      var descricao = params.get("error_description");
+      var caixa = document.getElementById("resultado");
+      var titulo = document.getElementById("titulo");
+
+      // Monta os elementos com textContent (nunca innerHTML) para não
+      // interpretar nada vindo da URL como HTML.
+      function p(texto) {
+        var el = document.createElement("p");
+        el.textContent = texto;
+        return el;
+      }
+
+      caixa.textContent = "";
+
+      if (erro) {
+        titulo.textContent = "Autorização não concluída";
+        caixa.appendChild(p("O TikTok retornou um erro: " + erro + (descricao ? " (" + descricao + ")" : "") + "."));
+        caixa.appendChild(p("Volte ao programa e tente novamente com: python autopost.py login"));
+        return;
+      }
+
+      if (!code) {
+        caixa.appendChild(p("Nenhum código de autorização foi recebido. Para conectar uma conta, use o comando python autopost.py login."));
+        return;
+      }
+
+      titulo.textContent = "Autorização recebida";
+      caixa.appendChild(p("Copie o código abaixo e cole no terminal, quando o programa pedir."));
+
+      var caixaCodigo = document.createElement("div");
+      caixaCodigo.className = "codigo-caixa";
+      caixaCodigo.id = "codigo";
+      caixaCodigo.textContent = code;
+      caixa.appendChild(caixaCodigo);
+
+      var botao = document.createElement("button");
+      botao.type = "button";
+      botao.textContent = "Copiar código";
+      botao.addEventListener("click", function () {
+        function ok() { botao.textContent = "Código copiado"; }
+        function falhou() { botao.textContent = "Selecione e copie manualmente"; }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(code).then(ok, falhou);
+        } else {
+          falhou();
+        }
+      });
+      caixa.appendChild(botao);
+
+      var aviso = document.createElement("div");
+      aviso.className = "aviso";
+      aviso.appendChild(p("Não compartilhe este código. Ele expira em pouco tempo e só pode ser usado uma vez."));
+      caixa.appendChild(aviso);
+    })();
+  </script>
+</body>
+</html>
