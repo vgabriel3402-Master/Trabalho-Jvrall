@@ -1,0 +1,136 @@
+/* Estilo compartilhado das páginas públicas (GitHub Pages).
+   Sem dependências externas: fontes do sistema, nenhum script de terceiros. */
+
+:root {
+  --fundo: #f7f8fa;
+  --superficie: #ffffff;
+  --texto: #1b2230;
+  --texto-suave: #4f596b;
+  --borda: #d9dee7;
+  --destaque: #0f6b6b;
+  --destaque-fundo: #e4f2f1;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fundo: #12161d;
+    --superficie: #1a202a;
+    --texto: #e8ecf2;
+    --texto-suave: #a5afc0;
+    --borda: #2c3543;
+    --destaque: #5cc4c0;
+    --destaque-fundo: #16302f;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--fundo);
+  color: var(--texto);
+  font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+}
+
+a { color: var(--destaque); text-underline-offset: 3px; }
+a:focus-visible { outline: 3px solid var(--destaque); outline-offset: 2px; border-radius: 2px; }
+
+header.topo {
+  background: var(--superficie);
+  border-bottom: 1px solid var(--borda);
+}
+
+.topo-interno,
+main {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+.topo-interno {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+.marca { font-weight: 700; font-size: 1.05rem; color: var(--texto); text-decoration: none; }
+
+nav a {
+  margin-right: 1.1rem;
+  font-size: 0.95rem;
+  text-decoration: none;
+}
+nav a:last-child { margin-right: 0; }
+nav a[aria-current="page"] { font-weight: 700; text-decoration: underline; }
+
+main { padding-top: 2.5rem; padding-bottom: 4rem; }
+
+h1, h2 {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+h1 { font-size: 2.1rem; margin: 0 0 0.5rem; }
+h2 { font-size: 1.25rem; margin: 2.4rem 0 0.6rem; }
+
+.meta { color: var(--texto-suave); font-size: 0.95rem; margin: 0 0 2rem; }
+
+p, ul { margin: 0 0 1rem; }
+ul { padding-left: 1.3rem; }
+li { margin-bottom: 0.35rem; }
+
+.aviso {
+  background: var(--destaque-fundo);
+  border-left: 4px solid var(--destaque);
+  padding: 0.9rem 1.1rem;
+  margin: 1.5rem 0;
+}
+.aviso p:last-child { margin-bottom: 0; }
+
+.codigo-caixa {
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: 6px;
+  padding: 1rem 1.1rem;
+  margin: 1.2rem 0;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.9rem;
+  word-break: break-all;
+}
+
+button {
+  font: inherit;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--destaque);
+  color: var(--fundo);
+  border: 0;
+  border-radius: 6px;
+  padding: 0.55rem 1rem;
+  cursor: pointer;
+}
+button:focus-visible { outline: 3px solid var(--texto); outline-offset: 2px; }
+
+footer {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 3rem;
+  border-top: 1px solid var(--borda);
+  color: var(--texto-suave);
+  font-size: 0.9rem;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+@media (max-width: 30rem) {
+  h1 { font-size: 1.7rem; }
+  body { font-size: 1rem; }
+}
